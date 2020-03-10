@@ -252,3 +252,14 @@ end
 Then /^show me the page$/ do
   save_and_open_page
 end
+
+Then /^the director of "([^"]*)" should be "([^"]*)"$/ do |title, director|
+  movie = Movie.find_by(:title => title)
+  movie_director = movie[:director]
+  
+  if movie_director.respond_to? :should
+    movie_director.should == director
+  else
+    assert_equal movie_director, director
+  end
+end

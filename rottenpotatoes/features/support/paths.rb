@@ -13,8 +13,14 @@ module NavigationHelpers
   def path_to(page_name)
     case page_name
 
-    when /^the (RottenPotatoes )?home\s?page$/ then '/movies'
-
+    when /^the (RottenPotatoes )?home\s?page$/ then
+      movies_path
+    when /^the edit page for "(.*)"$/ then
+      edit_movie_path(Movie.find_by(:title => $1))
+    when /^the details page for "(.*)"$/ then
+      movie_path(Movie.find_by(:title => $1))
+    when /^the Similar Movies page for "(.*)"$/ then
+      movie_find_movies_with_same_directors_path(Movie.find_by(:title => $1))
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
